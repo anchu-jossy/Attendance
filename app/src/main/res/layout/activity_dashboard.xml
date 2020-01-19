@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="net.gahfy.mvvmposts.ui.dashboard.DashboardViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/signin_border">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageview_attendence"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/border"
+                android:src="@drawable/ic_add"
+                tools:layout_editor_absoluteX="48dp"
+                tools:layout_editor_absoluteY="260dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageview_notifications"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/border"
+                android:src="@drawable/ic_bell"
+                tools:layout_editor_absoluteX="212dp"
+                tools:layout_editor_absoluteY="263dp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
