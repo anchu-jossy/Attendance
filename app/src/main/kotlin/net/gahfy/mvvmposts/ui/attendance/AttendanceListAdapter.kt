@@ -1,39 +1,38 @@
 package net.gahfy.mvvmposts.ui.attendance
 
+import android.content.Context
 import androidx.databinding.DataBindingUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import net.gahfy.mvvmposts.R
-import net.gahfy.mvvmposts.databinding.ItemPostBinding
-import net.gahfy.mvvmposts.model.Post
+import net.gahfy.mvvmposts.databinding.AttendanceItemBinding
 
-class AttendanceListAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<AttendanceListAdapter.ViewHolder>() {
-    private lateinit var postList:List<Post>
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttendanceListAdapter.ViewHolder {
-        val binding: ItemPostBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_post, parent, false)
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: AttendanceListAdapter.ViewHolder, position: Int) {
-        holder.bind(postList[position])
+class AttendanceListAdapter(val items: List<AttendanceModel>, val context: Context) :
+        RecyclerView.Adapter<AttendanceListAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
+        val bindig = DataBindingUtil.inflate<AttendanceItemBinding>(
+                LayoutInflater.from(parent.context),
+                R.layout.attendance_item,
+                parent,
+                false
+        )
+        return ViewHolder(bindig)
     }
 
     override fun getItemCount(): Int {
-        return if(::postList.isInitialized) postList.size else 0
+        return items.size
     }
 
-    fun updatePostList(postList:List<Post>){
-        this.postList = postList
-        notifyDataSetChanged()
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.binding.tvStudName.text = items.get(position).name
+//        if (items.get(position).equals("present")) holder.binding.rbPresent.isActivated = true
+//        else if (items.get(position).equals("absent")) holder.binding.rbAbsent.isActivated = true
+//        else holder.binding.rbAbsent.isActivated = true
+//        holder.binding.llItem.setOnClickListener { listViewModel.singleItemMutableLiveData.value = items.get(position) }
+
     }
 
-    class ViewHolder(private val binding: ItemPostBinding): androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root){
-        private val viewModel = AttendanceListModel()
-
-        fun bind(post:Post){
-            viewModel.bind(post)
-           // binding.viewModel = viewModel
-        }
-    }
+    class ViewHolder(val binding: AttendanceItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

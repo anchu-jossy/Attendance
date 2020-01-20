@@ -1,3 +1,4 @@
+package net.gahfy.mvvmposts.ui.login
 import com.google.gson.annotations.SerializedName
 
 

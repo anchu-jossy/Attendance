@@ -1,16 +1,17 @@
 package net.gahfy.mvvmposts.injection.module
 
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
-import io.reactivex.schedulers.Schedulers
 import net.gahfy.mvvmposts.network.PostApi
-import net.gahfy.mvvmposts.utils.BASE_URL
 import net.gahfy.mvvmposts.utils.DEV_URL
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
+
 
 /**
  * Module which provides all required dependencies about network
@@ -39,10 +40,19 @@ object NetworkModule {
     @Reusable
     @JvmStatic
     internal fun provideRetrofitInterface(): Retrofit {
+        val logging = HttpLoggingInterceptor()
+        val httpClient = OkHttpClient.Builder()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+        httpClient.addInterceptor(logging)
+        val gson = GsonBuilder()
+                .setLenient()
+                .create()
         return Retrofit.Builder()
                 .baseUrl(DEV_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .addConverterFactory(GsonConverterFactory.create(gson))
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(httpClient.build())
                 .build()
     }
 }

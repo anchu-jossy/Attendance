@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import net.gahfy.mvvmposts.injection.component.DaggerViewModelInjector
 import net.gahfy.mvvmposts.injection.component.ViewModelInjector
 import net.gahfy.mvvmposts.injection.module.NetworkModule
+import net.gahfy.mvvmposts.ui.login.LoginViewModel
 import net.gahfy.mvvmposts.ui.post.PostListViewModel
 import net.gahfy.mvvmposts.ui.post.PostViewModel
 
@@ -24,6 +25,7 @@ abstract class BaseViewModel:ViewModel(){
         when (this) {
             is PostListViewModel -> injector.inject(this)
             is PostViewModel -> injector.inject(this)
+            is LoginViewModel -> injector.inject(this)
         }
     }
 }

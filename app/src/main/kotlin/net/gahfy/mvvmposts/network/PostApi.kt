@@ -1,8 +1,8 @@
 package net.gahfy.mvvmposts.network
 
-import LoginModel
 import io.reactivex.Observable
 import net.gahfy.mvvmposts.model.Post
+import net.gahfy.mvvmposts.ui.login.LoginModel
 import retrofit2.http.*
 
 /**
@@ -15,7 +15,7 @@ interface PostApi {
     @GET("/posts")
     fun getPosts(): Observable<List<Post>>
     @FormUrlEncoded
-    @POST("/login")
+    @POST("login")
     fun getLogin(@Field("email" ) email :String, @Field("password" ) password :String): Observable<LoginModel>
 
 
